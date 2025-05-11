@@ -13,6 +13,10 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         // $schedule->command('inspire')->hourly();
+        // Cai dat command chay theo ngay vao 00h
+        $schedule->command('app:salary')->daily();
+        // Neu muon cai dat de chay vao 1 thoi diem cu the thi thay bang dao * va so
+        $schedule->command('app:salary')->cron('*/30 * * * *');
     }
 
     /**

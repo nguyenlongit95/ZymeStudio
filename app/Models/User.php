@@ -11,7 +11,8 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
-
+    const ROLE_EDITOR = 0;
+    const ROLE_ADMIN = 1;
     /**
      * The attributes that are mass assignable.
      *
@@ -21,6 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role' // 0: Editor, 1: admin
     ];
 
     /**
@@ -42,4 +44,24 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    /**
+     * RelationShip
+     * Thuc hien lien ket bang du lieu, lay danh sach du lieu con kem theo
+     * Co the truy van trong bang du lieu con
+     */
+    /**
+     * Lien ket 1-n
+     *
+     * Su dung hasOne: khoa phu, khoa chinh
+     */
+    public function files()
+    {
+        return $this->hasMany('App\Models\File', 'user_id', 'id');
+    }
+
+    public function salary()
+    {
+        return $this->hasMany('App\Models\Salary', 'user_id', 'id');
+    }
 }
